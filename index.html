@@ -19,11 +19,11 @@
             display: inline-block;
             padding: 1rem 2rem;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 45, 91, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 45, 91, 0.15), inset 0 1px 1px rgba(255,255,255,0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
             overflow: hidden;
@@ -31,11 +31,11 @@
         }
 
         .glass-logo-button:hover {
-            transform: perspective(1000px) rotateX(10deg) translateY(-8px);
-            box-shadow: 0 20px 40px 0 rgba(0, 45, 91, 0.2);
+            transform: perspective(1000px) scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 40px 0 rgba(0, 45, 91, 0.2), inset 0 1px 1px rgba(255,255,255,0.3);
         }
 
-        /* Shine Effect */
+        /* Shine Effect for Desktop Hover */
         .glass-logo-button::before {
             content: '';
             position: absolute;
@@ -43,7 +43,7 @@
             left: -150%;
             width: 75%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transform: skewX(-25deg);
             transition: left 0.8s ease-in-out;
         }
@@ -52,13 +52,13 @@
             left: 150%;
         }
 
-        /* Ripple Effect */
+        /* Ripple Effect for Touch/Click */
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(255, 255, 255, 0.6);
             transform: scale(0);
-            animation: ripple-animation 0.6s linear;
+            animation: ripple-animation 0.7s cubic-bezier(0, 0, 0.2, 1);
             pointer-events: none;
         }
 
@@ -105,6 +105,7 @@
 
         /* Prevent word break in quiz questions */
         #question-text {
+            word-break: normal;
             -webkit-hyphens: none;
             -moz-hyphens: none;
             -ms-hyphens: none;
@@ -163,7 +164,7 @@
     <div class="max-w-7xl mx-auto">
         <!-- Header with Logo -->
         <header class="text-center mb-12 flex justify-center">
-            <a id="logo-link" href="https://www.bitcure.com/contact-us/" target="_blank" rel="noopener noreferrer" class="glass-logo-button">
+            <a id="logo-link" href="https://www.bitcure.com/contact-us/" class="glass-logo-button">
                 <img src="https://www.bitcure.com/media/poobmn3e/reducedwhitespace_bitcure_logo_-coloured.svg" alt="BitCure Mindful Health Logo" class="mx-auto h-16 sm:h-20 w-auto">
             </a>
         </header>
@@ -320,42 +321,37 @@
                     contentDisplay.style.opacity = 1;
                 }, 400);
             };
-
+            
             // --- Ripple Effect for Logo ---
-            function runLogoRippleEffect() {
-                const logoLink = document.getElementById('logo-link');
-                if (logoLink) {
-                    logoLink.addEventListener('mousedown', function(e) {
-                        e.preventDefault(); 
-
-                        const rect = this.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-
-                        const ripple = document.createElement('span');
-                        ripple.className = 'ripple';
-                        ripple.style.left = `${x}px`;
-                        ripple.style.top = `${y}px`;
-                        
-                        // Set width and height based on button size for a better effect
-                        const size = Math.max(this.clientWidth, this.clientHeight);
-                        ripple.style.width = ripple.style.height = `${size}px`;
-
-                        this.appendChild(ripple);
-
-                        setTimeout(() => {
-                            window.open(this.href, this.target);
-                        }, 400); // Delay navigation to see the ripple
-
-                        setTimeout(() => {
-                            ripple.remove();
-                        }, 600);
-                    });
-                     logoLink.addEventListener('touchstart', function(e) {
-                        // This uses the mousedown logic, which is compatible with touch
-                    }, { passive: true });
-                }
+            const logoLink = document.getElementById('logo-link');
+            if (logoLink) {
+                logoLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const link = this;
+                    
+                    const rect = link.getBoundingClientRect();
+                    const ripple = document.createElement('span');
+                    
+                    ripple.className = 'ripple';
+                    ripple.style.height = ripple.style.width = Math.max(rect.width, rect.height) + 'px';
+                    link.appendChild(ripple);
+                    
+                    const top = e.pageY - rect.top - ripple.offsetHeight / 2 - document.documentElement.scrollTop;
+                    const left = e.pageX - rect.left - ripple.offsetWidth / 2 - document.documentElement.scrollLeft;
+                    
+                    ripple.style.top = top + 'px';
+                    ripple.style.left = left + 'px';
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 700);
+                    
+                    setTimeout(() => {
+                        window.open(link.href, '_blank');
+                    }, 400);
+                });
             }
+
 
             // --- Event Listeners ---
             homeBtn.addEventListener('click', displayHome);
@@ -370,7 +366,6 @@
 
             // --- Initial Load ---
             displayHome();
-            runLogoRippleEffect(); // Activate the logo ripple effect
 
             // --- Metabolic Risk Quiz Script ---
             function runMetabolicScript() {
@@ -640,7 +635,7 @@
                     let rankText, rankEmoji;
                     if (score === 10) { rankText = "Metabolic Master!"; rankEmoji = "🥇🏆"; } else if (score >= 8) { rankText = "Nutrition Nerd!"; rankEmoji = "🤓👍"; }
                     else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "😊📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔💡"; }
-                    else { rankText = "Keep Learning!"; rankEmoji = "🌱�"; }
+                    else { rankText = "Keep Learning!"; rankEmoji = "🌱🧠"; }
                     rankingTextEl.textContent = rankText; rankingEmojiEl.textContent = rankEmoji;
                     resultsTimer = setTimeout(initializeQuiz, 30000);
                 }
