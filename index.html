@@ -14,6 +14,44 @@
             color: #002D5B; /* Dark blue from logo */
         }
 
+        /* Glass Logo Button Styles */
+        .glass-logo-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 45, 91, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .glass-logo-button:hover {
+            transform: perspective(1000px) rotateX(10deg) translateY(-8px);
+            box-shadow: 0 20px 40px 0 rgba(0, 45, 91, 0.2);
+        }
+
+        /* Shine Effect */
+        .glass-logo-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-25deg);
+            transition: left 0.8s ease-in-out;
+        }
+
+        .glass-logo-button:hover::before {
+            left: 150%;
+        }
+
         /* 3D Button Styles */
         .btn-3d {
             position: relative;
@@ -89,8 +127,10 @@
 <body class="min-h-screen p-4 sm:p-6 md:p-8">
     <div class="max-w-7xl mx-auto">
         <!-- Header with Logo -->
-        <header class="text-center mb-8">
-            <img src="https://www.bitcure.com/media/poobmn3e/reducedwhitespace_bitcure_logo_-coloured.svg" alt="BitCure Mindful Health Logo" class="mx-auto h-20 w-auto">
+        <header class="text-center mb-12 flex justify-center">
+            <a href="https://www.bitcure.com/contact-us/" target="_blank" rel="noopener noreferrer" class="glass-logo-button">
+                <img src="https://www.bitcure.com/media/poobmn3e/reducedwhitespace_bitcure_logo_-coloured.svg" alt="BitCure Mindful Health Logo" class="mx-auto h-20 w-auto">
+            </a>
         </header>
 
         <!-- 3D Navigation Buttons -->
