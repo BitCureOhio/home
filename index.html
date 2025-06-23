@@ -373,12 +373,126 @@
                 const rankingEmojiEl = document.getElementById('ranking-emoji'); const rankingTextEl = document.getElementById('ranking-text'); const explanationModal = document.getElementById('explanation-modal');
                 const modalTitle = document.getElementById('modal-title'); const modalExplanation = document.getElementById('modal-explanation'); const modalNextBtn = document.getElementById('modal-next-btn');
                 const allQuestions = [
-                    { question: "This label shows 'Includes 10g Added Sugars'. Where do 'added sugars' typically come from?", imageUrl: "https://wiki.ubc.ca/images/thumb/4/44/Nutrition_Label_of_Smucker%E2%80%99s_Pure_Strawberry_Jam.jpg/900px-Nutrition_Label_of_Smucker%E2%80%99s_Pure_Strawberry_Jam.jpg?20230720200920", answers: [{ text: "Syrups and sweeteners added during processing", correct: true }, { text: "Naturally occurring in fruits and milk", correct: false }, { text: "From the fiber content of the food", correct: false }, { text: "From vitamins and minerals", correct: false }], explanation: "'Added sugars' are sugars and syrups put in foods during preparation or processing. They offer calories but no nutritional benefit. Consuming too many can spike blood sugar and insulin, leading to insulin resistance, a key driver of metabolic dysfunction." },
-                    { question: "A product has 25g of Total Carbohydrates and 5g of Dietary Fiber. What are its 'Net Carbs'?", imageUrl: "https://cdn.shopify.com/s/files/1/0266/5293/4215/files/NutritionLabel_Fotor_1_large.jpg?v=1574810444", answers: [{ text: "20g", correct: true }, { text: "30g", correct: false }, { text: "25g", correct: false }, { text: "5g", correct: false }], explanation: "Net carbs are the carbohydrates that the body can digest and use for energy. You calculate them by subtracting dietary fiber from total carbs (25g - 5g = 20g). Fiber isn't digested, so it doesn't impact blood sugar in the same way, making net carbs a useful metric for metabolic health." },
-                    { question: "Which term on an ingredient list is NOT a form of sugar?", imageUrl: "https://cdn.pixabay.com/photo/2014/10/11/21/35/sugar-485050_1280.jpg", answers: [{ text: "Xanthan Gum", correct: true }, { text: "Dextrose", correct: false }, { text: "High-fructose corn syrup", correct: false }, { text: "Maltose", correct: false }], explanation: "Xanthan gum is a food additive used as a thickener or stabilizer. Dextrose, high-fructose corn syrup, and maltose are all types of sugar that add to the total sugar content and impact blood glucose levels." },
-                    { question: "Which of these carbohydrates is digested most slowly?", imageUrl: "https://cdn.pixabay.com/photo/2014/11/14/20/20/blueberries-531209_1280.jpg", answers: [{ text: "Oatmeal (complex carb)", correct: true }, { text: "White bread (simple carb)", correct: false }, { text: "Candy (simple carb)", correct: false }, { text: "Soda (simple carb)", correct: false }], explanation: "Complex carbohydrates, like those in oatmeal, are made of long chains of sugar molecules that take the body longer to break down. This slow digestion results in a gradual release of glucose into the bloodstream, preventing energy spikes and crashes." },
-                    { question: "This label shows 0g Trans Fat. To be certain, what should you look for in the ingredients list?", imageUrl: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=600&auto=format&fit=crop", answers: [{ text: "'Partially hydrogenated oil'", correct: true }, { text: "'Olive oil'", correct: false }, { text: "'Coconut oil'", correct: false }, { text: "'Palm oil'", correct: false }], explanation: "Food manufacturers can label a product as '0g trans fat' if it contains less than 0.5g per serving. The true culprit is 'partially hydrogenated oil.' This industrial fat is terrible for metabolic health, as it raises bad (LDL) cholesterol and lowers good (HDL) cholesterol." },
-                    { question: "Which type of fat is considered most beneficial for heart and metabolic health?", imageUrl: "https://cdn.pixabay.com/photo/2017/05/23/22/36/vegetables-2338824_1280.jpg", answers: [{ text: "Monounsaturated Fat", correct: true }, { text: "Saturated Fat", correct: false }, { text: "Trans Fat", correct: false }, { text: "Polyunsaturated Fat (Omega-6)", correct: false }], explanation: "Monounsaturated fats, found in avocados, olive oil, and nuts, are metabolic heroes. They help lower bad LDL cholesterol, raise good HDL cholesterol, and can improve insulin sensitivity, making them a cornerstone of a metabolically healthy diet." }
+                    {
+                        question: "This label shows 'Includes 10g Added Sugars'. Where do 'added sugars' typically come from?",
+                        imageUrl: "https://wiki.ubc.ca/images/thumb/4/44/Nutrition_Label_of_Smucker%E2%80%99s_Pure_Strawberry_Jam.jpg/900px-Nutrition_Label_of_Smucker%E2%80%99s_Pure_Strawberry_Jam.jpg?20230720200920",
+                        answers: [{ text: "Syrups and sweeteners added during processing", correct: true }, { text: "Naturally occurring in fruits and milk", correct: false }, { text: "From the fiber content of the food", correct: false }, { text: "From vitamins and minerals", correct: false }],
+                        explanation: "'Added sugars' are sugars and syrups put in foods during preparation or processing. They offer calories but no nutritional benefit. Consuming too many can spike blood sugar and insulin, leading to insulin resistance, a key driver of metabolic dysfunction."
+                    },
+                    {
+                        question: "A product has 25g of Total Carbohydrates and 5g of Dietary Fiber. What are its 'Net Carbs'?",
+                        imageUrl: "https://cdn.shopify.com/s/files/1/0266/5293/4215/files/NutritionLabel_Fotor_1_large.jpg?v=1574810444",
+                        answers: [{ text: "20g", correct: true }, { text: "30g", correct: false }, { text: "25g", correct: false }, { text: "5g", correct: false }],
+                        explanation: "Net carbs are the carbohydrates that the body can digest and use for energy. You calculate them by subtracting dietary fiber from total carbs (25g - 5g = 20g). Fiber isn't digested, so it doesn't impact blood sugar in the same way, making net carbs a useful metric for metabolic health."
+                    },
+                    {
+                        question: "Which term on an ingredient list is NOT a form of sugar?",
+                        imageUrl: "https://cdn.pixabay.com/photo/2014/10/11/21/35/sugar-485050_1280.jpg",
+                        answers: [{ text: "Xanthan Gum", correct: true }, { text: "Dextrose", correct: false }, { text: "High-fructose corn syrup", correct: false }, { text: "Maltose", correct: false }],
+                        explanation: "Xanthan gum is a food additive used as a thickener or stabilizer. Dextrose, high-fructose corn syrup, and maltose are all types of sugar that add to the total sugar content and impact blood glucose levels."
+                    },
+                    {
+                        question: "Which of these carbohydrates is digested most slowly?",
+                        imageUrl: "https://cdn.pixabay.com/photo/2014/11/14/20/20/blueberries-531209_1280.jpg",
+                        answers: [{ text: "Oatmeal (complex carb)", correct: true }, { text: "White bread (simple carb)", correct: false }, { text: "Candy (simple carb)", correct: false }, { text: "Soda (simple carb)", correct: false }],
+                        explanation: "Complex carbohydrates, like those in oatmeal, are made of long chains of sugar molecules that take the body longer to break down. This slow digestion results in a gradual release of glucose into the bloodstream, preventing energy spikes and crashes."
+                    },
+                    {
+                        question: "This label shows 0g Trans Fat. To be certain, what should you look for in the ingredients list?",
+                        imageUrl: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=600&auto=format&fit=crop",
+                        answers: [{ text: "'Partially hydrogenated oil'", correct: true }, { text: "'Olive oil'", correct: false }, { text: "'Coconut oil'", correct: false }, { text: "'Palm oil'", correct: false }],
+                        explanation: "Food manufacturers can label a product as '0g trans fat' if it contains less than 0.5g per serving. The true culprit is 'partially hydrogenated oil.' This industrial fat is terrible for metabolic health, as it raises bad (LDL) cholesterol and lowers good (HDL) cholesterol."
+                    },
+                    {
+                        question: "Which type of fat is considered most beneficial for heart and metabolic health?",
+                        imageUrl: "https://cdn.pixabay.com/photo/2017/05/23/22/36/vegetables-2338824_1280.jpg",
+                        answers: [{ text: "Monounsaturated Fat", correct: true }, { text: "Saturated Fat", correct: false }, { text: "Trans Fat", correct: false }, { text: "Polyunsaturated Fat (Omega-6)", correct: false }],
+                        explanation: "Monounsaturated fats, found in avocados, olive oil, and nuts, are metabolic heroes. They help lower bad LDL cholesterol, raise good HDL cholesterol, and can improve insulin sensitivity, making them a cornerstone of a metabolically healthy diet."
+                    },
+                     {
+                        question: "If a food contains Omega-3 fatty acids, it's beneficial for reducing what?",
+                        imageUrl: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=600&auto=format&fit=crop",
+                        answers: [{ text: "Inflammation", correct: true }, { text: "Bone density", correct: false }, { text: "Muscle mass", correct: false }, { text: "Blood pressure instantly", correct: false }],
+                        explanation: "Omega-3 fatty acids, found in fatty fish like salmon, are powerful anti-inflammatory agents. Chronic inflammation is a root cause of many metabolic issues, including insulin resistance, so consuming Omega-3s is highly beneficial."
+                    },
+                    {
+                        question: "The label indicates 'High in Dietary Fiber'. How does fiber primarily support metabolic health?",
+                        imageUrl: "https://cdn.pixabay.com/photo/2020/01/02/04/39/lentil-soup-4734947_1280.jpg",
+                        answers: [{ text: "It slows sugar absorption and promotes fullness", correct: true }, { text: "It provides a quick burst of energy", correct: false }, { text: "It's the building block of muscle", correct: false }, { text: "It rapidly increases blood sugar", correct: false }],
+                        explanation: "Fiber is a powerhouse for metabolic health. It forms a gel-like substance in the gut, slowing down the absorption of sugar into the bloodstream. This prevents sharp blood sugar spikes and helps you feel full longer, reducing overall calorie intake."
+                    },
+                    {
+                        question: "This food has 20g of protein. What is a primary role of protein in the body?",
+                        imageUrl: "https://cdn.pixabay.com/photo/2021/10/16/12/51/steak-6714964_1280.jpg",
+                        answers: [{ text: "Building and repairing tissues, including muscle", correct: true }, { text: "Providing immediate energy for a workout", correct: false }, { text: "Lubricating joints", correct: false }, { text: "Regulating body temperature", correct: false }],
+                        explanation: "Protein is crucial for maintaining and building muscle mass. More muscle is metabolically favorable because muscle tissue burns more calories at rest and acts as a storage site for glucose, helping to regulate blood sugar."
+                    },
+                     {
+                        question: "A high-protein meal tends to increase satiety (feeling of fullness) more than a meal high in what?",
+                        imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=600&auto=format&fit=crop",
+                        answers: [{ text: "Refined carbohydrates", correct: true }, { text: "Healthy fats", correct: false }, { text: "Fiber", correct: false }, { text: "Water", correct: false }],
+                        explanation: "Protein is the most satiating macronutrient. It helps regulate appetite hormones, making you feel fuller for longer. This can prevent overeating and snacking on metabolically-unfriendly foods, especially those high in refined carbs."
+                    },
+                    {
+                        question: "The % Daily Value for Sodium is 45%. This food is considered...",
+                        imageUrl: "https://cdn.pixabay.com/photo/2023/08/29/22/39/tomato-soup-8222247_1280.jpg",
+                        answers: [{ text: "High in sodium", correct: true }, { text: "Low in sodium", correct: false }, { text: "A moderate amount of sodium", correct: false }, { text: "Sodium-free", correct: false }],
+                        explanation: "A simple rule for % Daily Value (DV) is: 5% or less is low, and 20% or more is high. At 45% DV, a single serving of this food provides nearly half the recommended daily sodium limit. Chronically high sodium intake is a major contributor to high blood pressure, a key component of metabolic syndrome."
+                    },
+                    {
+                        question: "On an ingredients list, how are the ingredients ordered?",
+                        imageUrl: "https://media.istockphoto.com/id/1713465965/photo/usa-generic-snack-food-ingredients-nutrition-label.jpg?s=612x612&w=0&k=20&c=3roOLkpbUDGIRiQGAepe0XzhlGCSNbQU1l7POYXV1j8=",
+                        answers: [{ text: "By weight, from most to least", correct: true }, { text: "Alphabetically", correct: false }, { text: "By calorie count, from most to least", correct: false }, { text: "In a random order", correct: false }],
+                        explanation: "The first ingredient makes up the largest part of the food by weight. This is a crucial tip: if sugar or a refined grain is one of the first few ingredients, it's likely not a great choice for your metabolic health."
+                    },
+                    {
+                        question: "What does 'metabolic flexibility' refer to?",
+                        imageUrl: "https://images.theconversation.com/files/619682/original/file-20240916-18-tzwkxr.jpg?ixlib=rb-4.1.0&rect=22%2C5%2C3771%2C2514&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip",
+                        answers: [{ text: "The body's ability to switch between burning carbs and fats", correct: true }, { text: "How easily you can touch your toes", correct: false }, { text: "The variety of foods you can eat", correct: false }, { text: "The speed of your metabolism", correct: false }],
+                        explanation: "Metabolic flexibility is a sign of a healthy metabolism. It means your body can efficiently use carbohydrates for fuel when they're available (like after a meal) and then seamlessly switch to burning fat for energy when you're fasting (like overnight). Poor metabolic health often involves a reduced ability to burn fat effectively."
+                    },
+                    {
+                        question: "What is a good way to improve insulin sensitivity?",
+                        imageUrl: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=600&auto=format&fit=crop",
+                        answers: [{ text: "Regular physical activity and strength training", correct: true }, { text: "Eating more processed foods", correct: false }, { text: "Getting less than 6 hours of sleep", correct: false }, { text: "Avoiding all dietary fat", correct: false }],
+                        explanation: "Insulin sensitivity means your cells respond effectively to the hormone insulin. Exercise, especially strength training, is one of the best ways to improve it. Muscles that are regularly worked become more sensitive to insulin, allowing them to pull glucose from the blood more efficiently, which is crucial for metabolic health."
+                    },
+                    {
+                        question: "What does the term 'empty calories' refer to?",
+                        imageUrl: "https://images.unsplash.com/photo-1519087318609-bfb5c04c27f5?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        answers: [{ text: "Foods with calories but little to no nutritional value", correct: true }, { text: "Foods that are low in calories", correct: false }, { text: "Foods that make you feel empty", correct: false }, { text: "Calorie-free beverages", correct: false }],
+                        explanation: "Empty calories come from foods with high energy (from sugar and/or solid fats) but very few vitamins, minerals, or fiber. Think of soda, candy, and highly processed snacks."
+                    },
+                    {
+                        question: "What does 'Non-GMO' on a label mean?",
+                        imageUrl: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        answers: [{ text: "The food does not contain genetically modified organisms", correct: true }, { text: "The food is 100% organic", correct: false }, { text: "The food is unprocessed", correct: false }, { text: "The food is low in sugar", correct: false }],
+                        explanation: "'Non-GMO' means the food's ingredients were not derived from genetic engineering. While this is a specific production claim, it does not automatically mean the food is organic, unprocessed, or healthy."
+                    },
+                     {
+                        question: "If a package contains 3 servings and you eat the whole thing, what must you do to the calorie count?",
+                        imageUrl: "https://images.unsplash.com/photo-1676363913264-683487d04a19?q=80&w=2272&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        answers: [{ text: "Multiply it by 3", correct: true }, { text: "Divide it by 3", correct: false }, { text: "Keep it the same", correct: false }, { text: "Add 3 to it", correct: false }],
+                        explanation: "All the values on the nutrition label (calories, fat, sugar, etc.) apply to one single serving. If you eat the entire package, you have consumed three times the listed values."
+                    },
+                     {
+                        question: "Chronic stress can negatively impact metabolic health primarily by raising which hormone?",
+                        imageUrl: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=600&auto=format&fit=crop",
+                        answers: [{ text: "Cortisol", correct: true }, { text: "Testosterone", correct: false }, { text: "Estrogen", correct: false }, { text: "Melatonin", correct: false }],
+                        explanation: "Cortisol, the primary stress hormone, raises blood sugar to prepare the body for a 'fight or flight' response. Chronic stress leads to chronically elevated cortisol, which can cause persistent high blood sugar, increase cravings for unhealthy food, and promote belly fat storage."
+                    },
+                    {
+                        question: "Poor sleep is linked to poor metabolic health because it can...",
+                        imageUrl: "https://images.unsplash.com/photo-1592806088932-05058af0ad8d?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        answers: [{ text: "Increase insulin resistance and cravings for unhealthy food", correct: true }, { text: "Increase your muscle mass overnight", correct: false }, { text: "Lower your blood pressure automatically", correct: false }, { text: "Decrease your appetite for the next day", correct: false }],
+                        explanation: "Lack of quality sleep disrupts the hormones that regulate appetite (ghrelin and leptin) and stress (cortisol). This hormonal chaos can increase insulin resistance the very next day and make you crave high-sugar, high-fat foods."
+                    },
+                    {
+                        question: "A food with a low glycemic index (GI) will generally cause...",
+                        imageUrl: "https://eatbobos.com/cdn/shop/articles/low-glycemic-snacks-bobos.jpg",
+                        answers: [{ text: "A slower, smaller rise in blood sugar", correct: true }, { text: "A rapid spike in blood sugar", correct: false }, { text: "An increase in blood pressure", correct: false }, { text: "A feeling of hunger", correct: false }],
+                        explanation: "The glycemic index ranks foods based on how quickly they raise blood sugar. Low-GI foods are digested and absorbed more slowly, leading to a gentle rise in blood sugar and insulin, which is ideal for metabolic health."
+                    }
                 ];
                 let currentQuestions = []; let currentQuestionIndex = 0; let score = 0; let resultsTimer = null;
                 function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
@@ -417,7 +531,7 @@
                     quizScreen.classList.add('hidden'); resultsScreen.classList.remove('hidden'); finalScoreEl.textContent = `${score}/${currentQuestions.length}`;
                     let rankText, rankEmoji;
                     if (score === 10) { rankText = "Metabolic Master!"; rankEmoji = "🥇🏆"; } else if (score >= 8) { rankText = "Nutrition Nerd!"; rankEmoji = "🤓👍"; }
-                    else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "😊📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔�"; }
+                    else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "😊📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔💡"; }
                     else { rankText = "Keep Learning!"; rankEmoji = "🌱🧠"; }
                     rankingTextEl.textContent = rankText; rankingEmojiEl.textContent = rankEmoji;
                     resultsTimer = setTimeout(initializeQuiz, 30000);
