@@ -59,13 +59,14 @@
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 15px 30px;
-            font-size: 1.1rem;
+            padding: 12px 24px; /* Adjusted padding for mobile */
+            font-size: 1rem; /* Adjusted font size for mobile */
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             box-shadow: 0 5px 0 #001f3f; /* Darker shade for 3D effect */
             outline: none;
+            width: 100%; /* Full width on mobile */
         }
 
         .btn-3d:hover {
@@ -85,6 +86,14 @@
             transition: opacity 0.5s ease-in-out;
         }
 
+        /* Prevent word break in quiz questions */
+        #question-text {
+            -webkit-hyphens: none;
+            -moz-hyphens: none;
+            -ms-hyphens: none;
+            hyphens: none;
+        }
+
         /* Styles from the provided files - may need adjustments */
         /* From metabolic.html */
         .question-card {
@@ -99,8 +108,8 @@
         #animated-title {
             font-weight: 900;
             --color1: #22d3ee; --color2: #8b5cf6; --color3: #ec4899;
-            font-size: clamp(2.25rem, 5.5vw, 3rem);
-            line-height: clamp(2.75rem, 6.5vw, 3.75rem);
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            line-height: clamp(2.25rem, 6vw, 3.25rem);
         }
         #animated-title .char { position: relative; display: inline-block; animation: text-ripple 2s ease-in-out infinite; animation-delay: calc(0.08s * var(--i)); text-shadow: 0 0 2px var(--color1), 0 0 10px var(--color1), 0 0 20px var(--color1), 0 0 30px var(--color2), 0 0 40px var(--color2), 0 0 50px var(--color3); }
         @keyframes text-ripple { 0%, 100% { transform: translateY(0) scale(1.0); color: var(--color2); } 50% { transform: translateY(-8px) scale(1.05); color: var(--color3); } }
@@ -122,6 +131,15 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .progress-bar-inner { transition: width 0.5s ease-in-out; }
+
+        /* Responsive adjustments for larger screens */
+        @media (min-width: 640px) {
+            .btn-3d {
+                width: auto; /* Auto width on larger screens */
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 sm:p-6 md:p-8">
@@ -129,12 +147,12 @@
         <!-- Header with Logo -->
         <header class="text-center mb-12 flex justify-center">
             <a href="https://www.bitcure.com/contact-us/" target="_blank" rel="noopener noreferrer" class="glass-logo-button">
-                <img src="https://www.bitcure.com/media/poobmn3e/reducedwhitespace_bitcure_logo_-coloured.svg" alt="BitCure Mindful Health Logo" class="mx-auto h-20 w-auto">
+                <img src="https://www.bitcure.com/media/poobmn3e/reducedwhitespace_bitcure_logo_-coloured.svg" alt="BitCure Mindful Health Logo" class="mx-auto h-16 sm:h-20 w-auto">
             </a>
         </header>
 
         <!-- 3D Navigation Buttons -->
-        <nav class="flex justify-center items-center space-x-4 mb-8">
+        <nav class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
             <button id="btn-home" class="btn-3d active">Home</button>
             <button id="btn-metabolic" class="btn-3d">Metabolic Risk Quiz</button>
             <button id="btn-quiz" class="btn-3d">Nutrition Quiz</button>
@@ -157,9 +175,9 @@
 
             // --- HTML Content Templates ---
             const homeContent = `
-                <div class="text-center p-8 rounded-2xl bg-white border border-gray-200 shadow-xl">
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-[#002D5B] mb-4">Welcome to BitCure</h1>
-                    <p class="text-lg md:text-xl text-gray-700 mb-6">Pioneering Personalized, Accessible Primary Care for Your Complete Well-Being</p>
+                <div class="text-center p-6 sm:p-8 rounded-2xl bg-white border border-gray-200 shadow-xl">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#002D5B] mb-4">Welcome to BitCure</h1>
+                    <p class="text-base sm:text-lg md:text-xl text-gray-700 mb-6">Pioneering Personalized, Accessible Primary Care for Your Complete Well-Being</p>
                     <p class="text-gray-500">Test your knowledge with one of our quizzes above!</p>
                 </div>
             `;
@@ -186,27 +204,27 @@
                                         <div id="progress-bar" class="bg-indigo-500 h-2.5 rounded-full" style="width: 6.67%"></div>
                                     </div>
                                 </div>
-                                <div id="question-card" class="bg-black bg-opacity-30 p-8 rounded-2xl shadow-2xl border border-gray-700">
-                                    <h2 id="question-text" class="text-2xl md:text-3xl font-semibold text-center mb-8"></h2>
-                                    <div class="flex justify-around">
-                                        <button class="answer-btn bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-2xl shadow-lg transform hover:scale-110 transition-transform" data-answer="yes">Yes 👍</button>
-                                        <button class="answer-btn bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-10 rounded-full text-2xl shadow-lg transform hover:scale-110 transition-transform" data-answer="no">No 👎</button>
+                                <div id="question-card" class="bg-black bg-opacity-30 p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-700">
+                                    <h2 id="question-text" class="text-xl sm:text-2xl md:text-3xl font-semibold text-center mb-8"></h2>
+                                    <div class="flex flex-col sm:flex-row justify-around space-y-4 sm:space-y-0">
+                                        <button class="answer-btn bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-xl sm:text-2xl shadow-lg transform hover:scale-110 transition-transform" data-answer="yes">Yes 👍</button>
+                                        <button class="answer-btn bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-xl sm:text-2xl shadow-lg transform hover:scale-110 transition-transform" data-answer="no">No 👎</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="result-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4">
-                        <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-2xl w-full text-left transform scale-95 transition-transform overflow-y-auto max-h-[90vh]">
-                            <h2 id="result-title" class="text-3xl font-bold mb-2 text-center"></h2>
-                            <p id="result-message" class="text-lg text-gray-300 mb-6 text-center"></p>
+                        <div class="bg-gray-800 rounded-2xl shadow-2xl p-6 sm:p-8 max-w-2xl w-full text-left transform scale-95 transition-transform overflow-y-auto max-h-[90vh]">
+                            <h2 id="result-title" class="text-2xl sm:text-3xl font-bold mb-2 text-center"></h2>
+                            <p id="result-message" class="text-base sm:text-lg text-gray-300 mb-6 text-center"></p>
                             <div id="criteria-section" class="result-section bg-gray-900 bg-opacity-50 p-4 rounded-lg mb-4">
-                                <h3 class="font-semibold text-xl mb-3 text-indigo-300">About Metabolic Syndrome</h3>
+                                <h3 class="font-semibold text-lg sm:text-xl mb-3 text-indigo-300">About Metabolic Syndrome</h3>
                                 <p class="text-sm text-gray-400 mb-3">A diagnosis of metabolic syndrome requires having at least <strong>three</strong> of the five core risk factors listed below. This quiz uses these criteria to estimate your risk profile.</p>
                                 <ul id="criteria-list" class="list-disc list-inside space-y-1 text-gray-300"></ul>
                             </div>
                             <div id="improvement-section" class="result-section bg-gray-900 bg-opacity-50 p-4 rounded-lg mb-6">
-                                <h3 class="font-semibold text-xl mb-2 text-indigo-300">Your Personal Feedback</h3>
+                                <h3 class="font-semibold text-lg sm:text-xl mb-2 text-indigo-300">Your Personal Feedback</h3>
                                 <p class="text-sm text-gray-400 mb-3">Based on your answers, here are some areas you could focus on for a healthier lifestyle. Every small change helps!</p>
                                 <div id="improvement-list" class="space-y-3 max-h-48 overflow-y-auto pr-2"></div>
                             </div>
@@ -224,34 +242,34 @@
             const quizContent = `
                 <div id="quiz-app-container">
                     <div id="quiz-app" class="w-full max-w-2xl mx-auto">
-                        <div id="start-screen" class="text-center quiz-card p-8 md:p-12">
-                            <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#005f73] to-[#002d5b] mb-4">Metabolic Health Quiz</h1>
-                            <p class="text-lg text-gray-600 mb-6">Think you know your nutrition labels? Let's find out! Test your knowledge and become a metabolic master.</p>
-                            <p class="text-4xl mb-8">🏆🥑🧠💪</p>
-                            <button id="start-btn" class="gradient-bg text-white font-bold py-4 px-10 rounded-full text-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg">Start Quiz</button>
+                        <div id="start-screen" class="text-center quiz-card p-6 sm:p-8 md:p-12">
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#005f73] to-[#002d5b] mb-4">Metabolic Health Quiz</h1>
+                            <p class="text-base sm:text-lg text-gray-600 mb-6">Think you know your nutrition labels? Let's find out! Test your knowledge and become a metabolic master.</p>
+                            <p class="text-3xl sm:text-4xl mb-8">🏆🥑🧠💪</p>
+                            <button id="start-btn" class="gradient-bg text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-lg sm:text-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg">Start Quiz</button>
                         </div>
                         <div id="quiz-screen" class="hidden quiz-card">
                             <div class="w-full bg-gray-200 rounded-t-2xl"><div id="progress-bar" class="progress-bar-inner gradient-bg h-3 rounded-t-2xl" style="width: 0%"></div></div>
                             <div class="p-6 md:p-8">
                                 <div class="flex justify-between items-center mb-6"><div id="question-counter" class="text-sm font-semibold text-gray-500">Question 1/10</div><div id="score-display" class="text-sm font-semibold text-gray-500">Score: 0</div></div>
                                 <div class="text-center mb-6">
-                                    <img id="question-image" src="" alt="Food Item" class="w-full h-auto max-h-72 object-contain rounded-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E2E8F0/4A5568?text=Image+Not+Found';">
-                                    <h2 id="question-text" class="text-xl md:text-2xl font-bold text-gray-800"></h2>
+                                    <img id="question-image" src="" alt="Food Item" class="w-full h-auto max-h-60 sm:max-h-72 object-contain rounded-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/E2E8F0/4A5568?text=Image+Not+Found';">
+                                    <h2 id="question-text" class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800"></h2>
                                 </div>
                                 <div id="answer-buttons" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"></div>
                             </div>
                         </div>
                         <div id="results-screen" class="hidden text-center quiz-card p-8 md:p-12">
-                            <h1 class="text-4xl font-bold text-gray-800 mb-2">Quiz Complete!</h1>
-                            <p id="final-score" class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#005f73] to-[#002d5b] my-4">0/10</p>
-                            <div id="ranking-emoji" class="text-7xl mb-4"></div>
-                            <h3 id="ranking-text" class="text-2xl font-bold text-gray-800 mb-8"></h3>
-                            <button id="reset-btn" class="gradient-bg text-white font-bold py-4 px-10 rounded-full text-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg">Try Again with New Questions</button>
+                            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Quiz Complete!</h1>
+                            <p id="final-score" class="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#005f73] to-[#002d5b] my-4">0/10</p>
+                            <div id="ranking-emoji" class="text-6xl sm:text-7xl mb-4"></div>
+                            <h3 id="ranking-text" class="text-xl sm:text-2xl font-bold text-gray-800 mb-8"></h3>
+                            <button id="reset-btn" class="gradient-bg text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full text-lg sm:text-xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-lg">Try Again with New Questions</button>
                         </div>
                     </div>
                     <div id="explanation-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4" style="display: none;">
-                        <div class="modal-content quiz-card w-full max-w-lg p-8 text-center">
-                            <h2 id="modal-title" class="text-3xl font-bold mb-4"></h2>
+                        <div class="modal-content quiz-card w-full max-w-lg p-6 sm:p-8 text-center">
+                            <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold mb-4"></h2>
                             <p id="modal-explanation" class="text-gray-700 mb-6"></p>
                             <button id="modal-next-btn" class="gradient-bg text-white font-bold py-3 px-8 rounded-full text-lg hover:shadow-lg hover:scale-105 transition-all duration-300">Next Question</button>
                         </div>
@@ -571,7 +589,7 @@
                     quizScreen.classList.add('hidden'); resultsScreen.classList.remove('hidden'); finalScoreEl.textContent = `${score}/${currentQuestions.length}`;
                     let rankText, rankEmoji;
                     if (score === 10) { rankText = "Metabolic Master!"; rankEmoji = "🥇🏆"; } else if (score >= 8) { rankText = "Nutrition Nerd!"; rankEmoji = "🤓👍"; }
-                    else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "😊📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔💡"; }
+                    else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "�📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔💡"; }
                     else { rankText = "Keep Learning!"; rankEmoji = "🌱🧠"; }
                     rankingTextEl.textContent = rankText; rankingEmojiEl.textContent = rankEmoji;
                     resultsTimer = setTimeout(initializeQuiz, 30000);
