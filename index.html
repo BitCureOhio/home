@@ -52,6 +52,23 @@
             left: 150%;
         }
 
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
         /* 3D Button Styles */
         .btn-3d {
             position: relative;
@@ -146,7 +163,7 @@
     <div class="max-w-7xl mx-auto">
         <!-- Header with Logo -->
         <header class="text-center mb-12 flex justify-center">
-            <a href="https://www.bitcure.com/contact-us/" target="_blank" rel="noopener noreferrer" class="glass-logo-button">
+            <a id="logo-link" href="https://www.bitcure.com/contact-us/" target="_blank" rel="noopener noreferrer" class="glass-logo-button">
                 <img src="https://www.bitcure.com/media/poobmn3e/reducedwhitespace_bitcure_logo_-coloured.svg" alt="BitCure Mindful Health Logo" class="mx-auto h-16 sm:h-20 w-auto">
             </a>
         </header>
@@ -283,7 +300,6 @@
                 
                 setTimeout(() => {
                     contentDisplay.innerHTML = htmlString;
-                    // Execute the specific script associated with the content
                     if(scriptFunction) {
                        scriptFunction();
                     }
@@ -305,6 +321,42 @@
                 }, 400);
             };
 
+            // --- Ripple Effect for Logo ---
+            function runLogoRippleEffect() {
+                const logoLink = document.getElementById('logo-link');
+                if (logoLink) {
+                    logoLink.addEventListener('mousedown', function(e) {
+                        e.preventDefault(); 
+
+                        const rect = this.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+
+                        const ripple = document.createElement('span');
+                        ripple.className = 'ripple';
+                        ripple.style.left = `${x}px`;
+                        ripple.style.top = `${y}px`;
+                        
+                        // Set width and height based on button size for a better effect
+                        const size = Math.max(this.clientWidth, this.clientHeight);
+                        ripple.style.width = ripple.style.height = `${size}px`;
+
+                        this.appendChild(ripple);
+
+                        setTimeout(() => {
+                            window.open(this.href, this.target);
+                        }, 400); // Delay navigation to see the ripple
+
+                        setTimeout(() => {
+                            ripple.remove();
+                        }, 600);
+                    });
+                     logoLink.addEventListener('touchstart', function(e) {
+                        // This uses the mousedown logic, which is compatible with touch
+                    }, { passive: true });
+                }
+            }
+
             // --- Event Listeners ---
             homeBtn.addEventListener('click', displayHome);
             metabolicBtn.addEventListener('click', () => {
@@ -318,10 +370,10 @@
 
             // --- Initial Load ---
             displayHome();
+            runLogoRippleEffect(); // Activate the logo ripple effect
 
             // --- Metabolic Risk Quiz Script ---
             function runMetabolicScript() {
-                // The setup for the title animation
                 const title = document.getElementById('animated-title');
                 if (title && !title.hasAttribute('data-animated')) {
                     const textContent = title.textContent;
@@ -345,8 +397,6 @@
                     });
                     title.setAttribute('data-animated', 'true');
                 }
-
-                // The rest of the metabolic quiz logic
                 const questions = [
                     { text: "Is your waist circumference large? (e.g., over 40 inches for men, 35 for women) 📏", isCoreFactor: true, tip: "Discuss healthy weight management strategies, like balanced nutrition and portion control, with a healthcare provider." },
                     { text: "Do you have high blood pressure, or are you on medication for it? 🩺", isCoreFactor: true, tip: "Regularly monitor your blood pressure. Reducing salt intake, managing stress, and regular exercise can help." },
@@ -589,8 +639,8 @@
                     quizScreen.classList.add('hidden'); resultsScreen.classList.remove('hidden'); finalScoreEl.textContent = `${score}/${currentQuestions.length}`;
                     let rankText, rankEmoji;
                     if (score === 10) { rankText = "Metabolic Master!"; rankEmoji = "🥇🏆"; } else if (score >= 8) { rankText = "Nutrition Nerd!"; rankEmoji = "🤓👍"; }
-                    else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "�📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔💡"; }
-                    else { rankText = "Keep Learning!"; rankEmoji = "🌱🧠"; }
+                    else if (score >= 6) { rankText = "Label Literate!"; rankEmoji = "😊📖"; } else if (score >= 4) { rankText = "Getting the Hang of It!"; rankEmoji = "🤔💡"; }
+                    else { rankText = "Keep Learning!"; rankEmoji = "🌱�"; }
                     rankingTextEl.textContent = rankText; rankingEmojiEl.textContent = rankEmoji;
                     resultsTimer = setTimeout(initializeQuiz, 30000);
                 }
