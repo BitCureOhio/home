@@ -281,16 +281,42 @@
 
                 <div class="space-y-4 border-b pb-6">
                     <h3 class="text-xl font-bold text-[#002D5B] border-b-2 border-[#00A99D] pb-2">Year 1: Follow-Up Labs</h3>
-                     <h4 class="font-semibold text-[#002D5B]">Panel 1 (4-6 months)</h4>
-                      <p class="text-sm">Includes: Glucose, Insulin, A1c, HOMA-IR, Lipid Profile, Uric Acid, Cortisol, hs-CRP. This panel assesses your progress and makes initial adjustments to your care plan based on these key metabolic and inflammatory markers.</p>
-                     <h4 class="font-semibold text-[#002D5B] mt-4">Panel 2 (7-9 months)</h4>
-                      <p class="text-sm">Includes: Glucose, Insulin, A1c, HOMA-IR, Lipid Profile, NMR Lipoprofile (Lipid Particle Size). This panel provides a deeper look at your lipid profile to further refine your treatment plan and assess cardiovascular risk.</p>
-                     <h4 class="font-semibold text-[#002D5B] mt-4">Panel 3 (10-12 months)</h4>
-                      <p class="text-sm">Includes: Glucose, Insulin, A1c, HOMA-IR, Lipid Profile. This panel confirms your progress and helps establish a long-term maintenance plan.</p>
+                     <div class="border-b pb-4">
+                        <h4 class="font-semibold text-[#002D5B]">Panel 1 (4-6 months)</h4>
+                        <p class="text-sm">This panel assesses your progress and makes initial adjustments to your care plan based on these key metabolic and inflammatory markers.</p>
+                        <ul class="list-disc list-inside space-y-1 pl-5 text-sm">
+                            <li><strong>Glucose, Insulin, A1c, HOMA-IR, Lipid Profile:</strong> Core markers to track changes in blood sugar control and cholesterol levels.</li>
+                            <li><strong>Uric Acid:</strong> High levels are linked to gout and metabolic syndrome.</li>
+                            <li><strong>hs-CRP:</strong> A key marker for systemic inflammation.</li>
+                            <li><strong>Cortisol:</strong> The "stress hormone"; chronically high levels can disrupt metabolism.</li>
+                        </ul>
+                     </div>
+                     <div class="border-b pb-4">
+                        <h4 class="font-semibold text-[#002D5B] mt-4">Panel 2 (7-9 months)</h4>
+                        <p class="text-sm">This panel provides a deeper look at your lipid profile to further refine your treatment plan and assess cardiovascular risk.</p>
+                         <ul class="list-disc list-inside space-y-1 pl-5 text-sm">
+                              <li><strong>Glucose, Insulin, A1c, HOMA-IR, Lipid Profile:</strong> Continued tracking of core metabolic markers.</li>
+                              <li><strong>NMR Lipoprofile (Lipid Particle Size):</strong> A detailed analysis of your cholesterol particles, providing a more accurate cardiovascular risk assessment.</li>
+                         </ul>
+                     </div>
+                     <div>
+                        <h4 class="font-semibold text-[#002D5B] mt-4">Panel 3 (10-12 months)</h4>
+                        <p class="text-sm">This panel confirms your progress and helps establish a long-term maintenance plan.</p>
+                         <ul class="list-disc list-inside space-y-1 pl-5 text-sm">
+                             <li><strong>Glucose, Insulin, A1c, HOMA-IR, Lipid Profile:</strong> Final check-in on core metabolic markers to solidify your health gains.</li>
+                         </ul>
+                     </div>
                 </div>
                  <div class="space-y-4">
                     <h3 class="text-xl font-bold text-[#002D5B] border-b-2 border-[#00A99D] pb-2">Year 2: Re-Evaluation Labs</h3>
-                     <p class="text-sm">Includes: CBC, CMP, Insulin, A1c, Lipid Profile. This comprehensive annual check-up ensures you are maintaining your health gains and allows for any necessary adjustments to your long-term wellness strategy.</p>
+                     <p class="text-sm">This comprehensive annual check-up ensures you are maintaining your health gains and allows for any necessary adjustments to your long-term wellness strategy.</p>
+                     <ul class="list-disc list-inside space-y-1 pl-5 text-sm">
+                        <li><strong>CBC (Complete Blood Count):</strong> A check on your overall blood health and inflammation levels.</li>
+                        <li><strong>CMP (Comprehensive Metabolic Panel):</strong> A broad overview of your metabolic function, including liver and kidney health.</li>
+                        <li><strong>Insulin, A1c, HOMA-IR:</strong> A review of your long-term blood sugar control and insulin sensitivity.</li>
+                        <li><strong>Lipid Profile:</strong> An assessment of your cardiovascular risk factors.</li>
+                        <li><strong>NMR LipoProfile (Lipid Particle Size):</strong> An advanced look at your cholesterol particles to ensure long-term cardiovascular health.</li>
+                    </ul>
                 </div>
 
             </div>
@@ -687,7 +713,7 @@
                     { text: "Have you been told your triglycerides are high? 🍔", isCoreFactor: true, tip: "Limit unhealthy fats, sugar, and alcohol. A diet rich in omega-3s (like fatty fish) can be beneficial." },
                     { text: "Do you get less than 30 minutes of moderate exercise most days? 🚶‍♀️", isCoreFactor: false, tip: "Aim for at least 150 minutes of moderate-intensity exercise per week. Start with brisk walking, and find activities you enjoy!" },
                     { text: "Does your diet frequently include sugary drinks and processed foods? 🥤", isCoreFactor: false, tip: "Swap sugary drinks for water and focus on whole, unprocessed foods like fruits, vegetables, and lean proteins." },
-                    { text: "Do you have a family history of diabetes or heart disease? 👨‍👩‍👧‍�", isCoreFactor: false, tip: "While you can't change your genes, knowing your family history empowers you to be extra vigilant with healthy habits and screenings." },
+                    { text: "Do you have a family history of diabetes or heart disease? 👨‍👩‍👧‍👦", isCoreFactor: false, tip: "While you can't change your genes, knowing your family history empowers you to be extra vigilant with healthy habits and screenings." },
                     { text: "Do you often feel tired or fatigued during the day? 😴", isCoreFactor: false, tip: "Prioritize 7-9 hours of quality sleep per night. If fatigue persists, it's worth discussing with a doctor as it can be linked to several conditions." },
                     { text: "Have you experienced unintentional weight gain, especially around your belly? 📈", isCoreFactor: false, tip: "Consider keeping a food and activity journal to identify patterns. A balanced diet and consistent exercise are key." },
                     { text: "Are you over 40 years old? 🎂", isCoreFactor: false, tip: "Risk increases with age, making regular health screenings and a proactive approach to lifestyle even more important." },
