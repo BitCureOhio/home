@@ -121,6 +121,11 @@
             hyphens: none;
         }
 
+        /* Styles for the new pop-up modal */
+        #promo-modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+
         /* Styles from the provided files - may need adjustments */
         /* From metabolic.html */
         .question-card {
@@ -191,6 +196,41 @@
         </main>
     </div>
 
+    <!-- Promotional Pop-up Modal -->
+    <div id="promo-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full text-left transform scale-95 transition-transform overflow-y-auto max-h-[90vh]" style="color: #002D5B;">
+            <div class="flex justify-between items-start">
+                 <h2 class="text-2xl sm:text-3xl font-bold mb-4">Let’s Start with a Friendly Meet & Greet</h2>
+                 <button id="close-promo-btn" class="text-2xl font-bold text-gray-400 hover:text-gray-600">&times;</button>
+            </div>
+            <div class="space-y-4 text-gray-700">
+                <ul class="list-disc list-inside space-y-2 pl-5">
+                    <li>Join us at our <strong>Blue Ash office</strong> for a welcoming, no-commitment opportunity to explore your health.</li>
+                    <li>Learn how our team reverses chronic disease through lifestyle + medical care.</li>
+                    <li>Receive a <strong>FIT 3D Biometric Scan</strong> (Body Fat %, Waist Ratio, Posture).</li>
+                    <li>Try a <strong>Continuous Glucose Monitor (CGM)</strong> — <strong>only <span style="color: #00A99D;">$25</span> discounted rate.</strong></li>
+                    <li>Come meet our clinicians and coaches. Ask questions, get personalized insights.</li>
+                    <li>Walk away with clarity- even if you don’t join the program.</li>
+                </ul>
+                <h3 class="text-xl font-bold pt-4">Reclaim Your Health with BitCure Mindful Health</h3>
+                <p>We offer a <strong>patient-centered, data-driven approach</strong> to reverse chronic illness, powered by:</p>
+                <ul class="list-disc list-inside space-y-2 pl-5">
+                    <li>Experienced NP/MD, dietitian, and health coach</li>
+                    <li>Real-time glucose tracking (CGM)</li>
+                    <li>Coaching and personalized plans</li>
+                    <li>Your own <strong>Personal Accountability Liaison (PAL)</strong> to keep you on track</li>
+                </ul>
+                <h3 class="text-xl font-bold pt-4">Ready to find out what’s going on inside your body?</h3>
+                <p><strong style="color: #002D5B;">Let’s talk. Call or visit us today to schedule your Fit3D scan + CGM.</strong></p>
+                <div class="text-center font-bold pt-4">
+                    <p>BitCure Mindful Health</p>
+                    <p>Blue Ash | <a href="https://www.bitcure.com" target="_blank" rel="noopener noreferrer" class="text-[#00A99D] hover:underline">www.bitcure.com</a> | <a href="tel:18772482873" class="text-[#00A99D] hover:underline">1-877-BITCURE</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Elements ---
@@ -202,10 +242,155 @@
 
             // --- HTML Content Templates ---
             const homeContent = `
-                <div class="text-center p-6 sm:p-8 rounded-2xl bg-white border border-gray-200" style="box-shadow: 0 10px 25px -5px rgba(0, 45, 91, 0.1), 0 8px 10px -6px rgba(0, 45, 91, 0.1);">
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#002D5B] mb-4" style="text-shadow: 0 2px 2px rgba(0, 45, 91, 0.2);">Welcome to BitCure</h1>
-                    <p class="text-base sm:text-lg md:text-xl text-gray-700 font-semibold mb-6">Pioneering Personalized, Accessible Primary Care for Your Complete Well-Being</p>
-                    <p class="text-gray-500">Test your knowledge with one of our quizzes above!</p>
+                <div>
+                    <div class="text-center p-6 sm:p-8 rounded-2xl bg-white border border-gray-200" style="box-shadow: 0 10px 25px -5px rgba(0, 45, 91, 0.1), 0 8px 10px -6px rgba(0, 45, 91, 0.1);">
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-[#002D5B] mb-4" style="text-shadow: 0 2px 2px rgba(0, 45, 91, 0.2);">Welcome to BitCure</h1>
+                        <p class="text-base sm:text-lg md:text-xl text-gray-700 font-semibold mb-6">Pioneering Personalized, Accessible Primary Care for Your Complete Well-Being</p>
+                        <p class="text-gray-500">Test your knowledge with one of our quizzes above!</p>
+                    </div>
+                    <div class="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <button id="btn-event" class="btn-3d">Event Promotion</button>
+                        <button id="btn-pricing" class="btn-3d">Early Access Pricing</button>
+                    </div>
+                </div>
+            `;
+            
+            const eventPromotionContent = `
+                <div class="p-6 sm:p-8 rounded-2xl bg-white border border-gray-200" style="box-shadow: 0 10px 25px -5px rgba(0, 45, 91, 0.1), 0 8px 10px -6px rgba(0, 45, 91, 0.1);">
+                    <h1 class="text-center text-2xl sm:text-3xl md:text-4xl font-black text-[#002D5B] mb-6" style="text-shadow: 0 2px 2px rgba(0, 45, 91, 0.2);">Let’s Start with a Friendly Meet & Greet</h1>
+                    <div class="text-left space-y-4 text-gray-700">
+                         <p>Join us at our <strong>Blue Ash office</strong> for a welcoming, no-commitment opportunity to explore your health.</p>
+                        <ul class="list-disc list-inside space-y-2 pl-5">
+                            <li>Learn how our team reverses chronic disease through lifestyle + medical care.</li>
+                            <li>Receive a <strong>FIT 3D Biometric Scan</strong> (Body Fat %, Waist Ratio, Posture).</li>
+                            <li>Try a <strong>Continuous Glucose Monitor (CGM)</strong> — <strong>only <span style="color: #00A99D;">$25</span> discounted rate.</strong></li>
+                            <li>Come meet our clinicians and coaches. Ask questions, get personalized insights.</li>
+                            <li>Walk away with clarity—even if you don’t join the program.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-gray-200 space-y-4 text-gray-700">
+                         <h2 class="text-center text-xl sm:text-2xl font-black text-[#002D5B] mb-4" style="text-shadow: 0 2px 2px rgba(0, 45, 91, 0.2);">Reclaim Your Health with BitCure Mindful Health</h2>
+                         <div class="text-left">
+                            <p>We offer a <strong>patient-centered, data-driven approach</strong> to reverse chronic illness, powered by:</p>
+                             <ul class="list-disc list-inside space-y-2 mt-2 pl-5">
+                                <li>Experienced NP/MD, dietitian, and health coach</li>
+                                <li>Real-time glucose tracking (CGM)</li>
+                                <li>Coaching and personalized plans</li>
+                                <li>Your own <strong>Personal Accountability Liaison (PAL)</strong> to keep you on track</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="mt-8 pt-6 border-t border-gray-200 space-y-4 text-gray-700 text-center">
+                        <h3 class="text-xl font-bold">Ready to find out what’s going on inside your body?</h3>
+                        <p><strong style="color: #002D5B;">Let’s talk. Call or visit us today to schedule your Fit3D scan + CGM.</strong></p>
+                        <div class="mt-4">
+                             <a href="https://www.bitcure.com/contact-us/" target="_blank" rel="noopener noreferrer" class="btn-3d active hover:bg-[#007a70] inline-block !w-auto">Schedule Your Scan</a>
+                        </div>
+                        <div class="font-bold pt-4">
+                            <p>BitCure Mindful Health</p>
+                            <p>Blue Ash | <a href="https://www.bitcure.com" target="_blank" rel="noopener noreferrer" class="text-[#00A99D] hover:underline">www.bitcure.com</a> | <a href="tel:18772482873" class="text-[#00A99D] hover:underline">1-877-BITCURE</a></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const pricingContent = `
+                <div>
+                    <section class="bg-[#0B2447] text-white p-6 md:p-10 rounded-2xl shadow-lg">
+                        <div class="text-center mb-10">
+                            <h2 class="text-3xl md:text-4xl font-extrabold">Year 1: Comprehensive Metabolic Reset</h2>
+                            <p class="mt-3 text-lg text-slate-300 max-w-3xl mx-auto">Your first year is an intensive journey structured in 90-day bundles to diagnose, treat, and reset your metabolism with continuous support. All bundles include a provider consultation, a personalized nutrition and lifestyle plan, support from a Dietician, health Coach and Personal Accountability Liaison (PAL), and consultations for common primary care needs (e.g., cough, cold).</p>
+                        </div>
+
+                        <div class="flex flex-col lg:flex-row lg:justify-between space-y-8 lg:space-y-0 lg:space-x-8">
+                            
+                            <div class="flex-1">
+                                <div class="bg-white text-slate-800 p-6 rounded-xl shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col hover:border-[#16a085] border-2 border-transparent">
+                                    <p class="font-bold text-[#0B2447]">MONTHS 1-3</p>
+                                    <h4 class="text-xl font-bold text-slate-800 mt-2">Initial Evaluation & Support</h4>
+                                    <div class="flex items-baseline gap-x-3 my-3">
+                                        <p class="text-3xl font-extrabold text-[#0B2447]">$299</p>
+                                        <p class="text-xl font-semibold text-slate-400 line-through">$349</p>
+                                    </div>
+                                     <span class="text-xs font-semibold bg-emerald-200 text-emerald-800 px-2 py-1 rounded-full self-start mb-3">Promotional Price</span>
+                                    <ul class="text-sm space-y-2 mt-auto">
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>60-min</strong> initial consult</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Baseline Metabolic Labs & First CGM</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>90-Day Support:</strong> Understanding your metabolic baseline.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="flex-1">
+                                <div class="bg-white text-slate-800 p-6 rounded-xl shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col hover:border-[#16a085] border-2 border-transparent">
+                                    <p class="font-bold text-[#0B2447]">MONTHS 4-6</p>
+                                    <h4 class="text-xl font-bold text-slate-800 mt-2">First Follow-Up & Support</h4>
+                                    <p class="text-3xl font-extrabold text-[#0B2447] my-3">$279</p>
+                                     <ul class="text-sm space-y-2 mt-auto">
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>30-min</strong> follow-up consult</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Follow-up Metabolic Labs</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>90-Day Support:</strong> Ongoing guidance based on new lab results.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="flex-1">
+                                <div class="bg-white text-slate-800 p-6 rounded-xl shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col hover:border-[#16a085] border-2 border-transparent">
+                                    <p class="font-bold text-[#0B2447]">MONTHS 7-9</p>
+                                    <h4 class="text-xl font-bold text-slate-800 mt-2">Second Follow-Up & Support</h4>
+                                    <p class="text-3xl font-extrabold text-[#0B2447] my-3">$279</p>
+                                     <ul class="text-sm space-y-2 mt-auto">
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>30-min</strong> follow-up consult</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Follow-up Metabolic Labs</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>90-Day Support:</strong> Continue to refine lifestyle and nutrition plan.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="flex-1">
+                                <div class="bg-white text-slate-800 p-6 rounded-xl shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col hover:border-[#16a085] border-2 border-transparent">
+                                    <p class="font-bold text-[#0B2447]">MONTHS 10-12</p>
+                                    <h4 class="text-xl font-bold text-slate-800 mt-2">Third Follow-Up & Support</h4>
+                                    <p class="text-3xl font-extrabold text-[#0B2447] my-3">$279</p>
+                                    <ul class="text-sm space-y-2 mt-auto">
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>30-min</strong> follow-up consult</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Follow-up Metabolic Labs</span></li>
+                                        <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>90-Day Support:</strong> Review annual progress & prepare for maintenance.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="bg-[#0B2447] text-white mt-16 p-6 md:p-10 rounded-2xl shadow-lg">
+                        <div class="text-center mb-10">
+                            <h2 class="text-3xl md:text-4xl font-extrabold">Year 2 & Beyond: The Maintenance Cycle</h2>
+                            <p class="mt-3 text-lg text-slate-300 max-w-3xl mx-auto">After your first year, you transition to an annual cycle to sustain your health gains with continued guidance from your care team. All bundles include a provider consultation, a personalized nutrition and lifestyle plan, support from a Dietician, health Coach and Personal Accountability Liaison (PAL), and consultations for common primary care needs (e.g., cough, cold).</p>
+                        </div>
+        
+                        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                            <div class="bg-slate-50 text-slate-800 p-6 rounded-xl shadow-lg flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-[#16a085] border-2 border-transparent">
+                                <p class="font-bold text-[#0B2447]">ANNUALLY</p>
+                                <h4 class="text-xl font-bold text-slate-800 mt-2">Annual Comprehensive Re-Evaluation</h4>
+                                <p class="text-3xl font-extrabold text-[#0B2447] my-3">$289</p>
+                                <ul class="text-sm space-y-2 mt-auto">
+                                   <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>45-min</strong> re-evaluation consult to kick off the new year.</span></li>
+                                   <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Re-evaluation Labs to track long-term progress.</span></li>
+                                   <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Includes first 90-Day support cycle of the year.</span></li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 text-slate-800 p-6 rounded-xl shadow-lg flex flex-col transition-all duration-300 hover:-translate-y-2 hover:border-[#16a085] border-2 border-transparent">
+                                <p class="font-bold text-[#0B2447]">EVERY 90 DAYS</p>
+                                <h4 class="text-xl font-bold text-slate-800 mt-2">Follow-Up & Maintenance</h4>
+                                <p class="text-3xl font-extrabold text-[#0B2447] my-3">$239</p>
+                                <ul class="text-sm space-y-2 mt-auto">
+                                   <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span><strong>30-min</strong> follow-up consult for ongoing adjustments.</span></li>
+                                   <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-[#16a085] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span>Continuous 90-Day care team support.</span></li>
+                                   <li class="flex items-start"><svg class="w-4 h-4 mr-2 mt-0.5 text-slate-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg><span>Lab tests not included in this bundle.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             `;
 
@@ -319,7 +504,10 @@
             
             // --- UI Management ---
             const setActiveButton = (activeBtn) => {
-                buttons.forEach(btn => btn.classList.toggle('active', btn === activeBtn));
+                buttons.forEach(btn => btn.classList.remove('active'));
+                if(activeBtn) {
+                    activeBtn.classList.add('active');
+                }
             };
 
             const displayHome = () => {
@@ -327,6 +515,28 @@
                 contentDisplay.style.opacity = 0;
                 setTimeout(() => {
                     contentDisplay.innerHTML = homeContent;
+                    contentDisplay.style.opacity = 1;
+                    // Add event listeners for the new buttons on the home page
+                    document.getElementById('btn-event').addEventListener('click', displayEventPage);
+                    document.getElementById('btn-pricing').addEventListener('click', displayPricingPage);
+
+                }, 400);
+            };
+            
+            const displayEventPage = () => {
+                setActiveButton(null); // No main nav button is active
+                contentDisplay.style.opacity = 0;
+                setTimeout(() => {
+                    contentDisplay.innerHTML = eventPromotionContent;
+                    contentDisplay.style.opacity = 1;
+                }, 400);
+            };
+
+            const displayPricingPage = () => {
+                setActiveButton(null); // No main nav button is active
+                contentDisplay.style.opacity = 0;
+                setTimeout(() => {
+                    contentDisplay.innerHTML = pricingContent;
                     contentDisplay.style.opacity = 1;
                 }, 400);
             };
@@ -378,29 +588,8 @@
 
             // --- Metabolic Risk Quiz Script ---
             function runMetabolicScript() {
+                // Get all DOM elements for this quiz
                 const title = document.getElementById('animated-title');
-                if (title && !title.hasAttribute('data-animated')) {
-                    const textContent = title.textContent;
-                    const words = textContent.split(' ');
-                    let charIndex = 0;
-                    title.innerHTML = '';
-                    words.forEach((word, wordIndex) => {
-                        const wordSpan = document.createElement('span');
-                        wordSpan.className = 'word';
-                        for (let i = 0; i < word.length; i++) {
-                            const charSpan = document.createElement('span');
-                            charSpan.className = 'char';
-                            charSpan.textContent = word[i];
-                            charSpan.style.setProperty('--i', charIndex++);
-                            wordSpan.appendChild(charSpan);
-                        }
-                        title.appendChild(wordSpan);
-                        if (wordIndex < words.length - 1) {
-                            title.appendChild(document.createTextNode(' '));
-                        }
-                    });
-                    title.setAttribute('data-animated', 'true');
-                }
                 const questions = [
                     { text: "Is your waist circumference large? (e.g., over 40 inches for men, 35 for women) 📏", isCoreFactor: true, tip: "Discuss healthy weight management strategies, like balanced nutrition and portion control, with a healthcare provider." },
                     { text: "Do you have high blood pressure, or are you on medication for it? 🩺", isCoreFactor: true, tip: "Regularly monitor your blood pressure. Reducing salt intake, managing stress, and regular exercise can help." },
@@ -434,17 +623,13 @@
                 const improvementList = document.getElementById('improvement-list');
                 const criteriaSection = document.getElementById('criteria-section');
                 const improvementSection = document.getElementById('improvement-section');
+                const promoModal = document.getElementById('promo-modal');
+                const closePromoBtn = document.getElementById('close-promo-btn');
                 let currentQuestionIndex = 0; let score = 0; let yesAnswers = []; let resetTimer;
-                function startQuiz() { startScreen.classList.add('hidden'); questionArea.classList.remove('hidden'); currentQuestionIndex = 0; score = 0; yesAnswers = []; showQuestion(); }
-                function showQuestion() { const question = questions[currentQuestionIndex]; questionText.innerHTML = question.text; const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100; progressBar.style.width = `${progressPercentage}%`; progressText.textContent = `Question ${currentQuestionIndex + 1} / ${questions.length}`; questionCard.classList.remove('entering'); }
-                function handleAnswer(event) {
-                    const isYes = event.target.dataset.answer === 'yes';
-                    const currentQuestion = questions[currentQuestionIndex];
-                    if (isYes) { if (currentQuestion.isCoreFactor) { score++; } yesAnswers.push(currentQuestion); }
-                    questionCard.classList.add('exiting');
-                    setTimeout(() => { currentQuestionIndex++; if (currentQuestionIndex < questions.length) { questionCard.classList.remove('exiting'); questionCard.classList.add('entering'); showQuestion(); } else { showResult(); } }, 500);
-                }
-                function showResult() {
+
+                // --- Define functions before using them ---
+                const showQuestion = () => { const question = questions[currentQuestionIndex]; questionText.innerHTML = question.text; const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100; progressBar.style.width = `${progressPercentage}%`; progressText.textContent = `Question ${currentQuestionIndex + 1} / ${questions.length}`; questionCard.classList.remove('entering'); };
+                const showResult = () => {
                     questionArea.classList.add('hidden');
                     criteriaList.innerHTML = '';
                     questions.filter(q => q.isCoreFactor).forEach(q => { const li = document.createElement('li'); li.textContent = q.text.split('(')[0].trim(); criteriaList.appendChild(li); });
@@ -463,14 +648,43 @@
                     else { resultTitle.innerHTML = "Low Risk Profile 😊"; resultMessage.textContent = `You answered 'Yes' to ${score} of the 5 key criteria. Your results look good! Keep up the healthy habits and continue with regular check-ups to maintain your health.`; }
                     resultModal.classList.remove('hidden'); resultModal.querySelector('div').classList.add('scale-100');
                     setTimeout(() => { criteriaSection.classList.add('show'); if (yesAnswers.length > 0) { improvementSection.classList.add('show'); } }, 300);
+                    setTimeout(() => { promoModal.classList.remove('hidden'); setTimeout(() => promoModal.querySelector('div').classList.add('scale-100'), 10); }, 20000);
                     resetTimer = setTimeout(restartQuiz, 120000);
-                }
-                function restartQuiz() {
+                };
+                const handleAnswer = (event) => {
+                    const isYes = event.target.dataset.answer === 'yes';
+                    const currentQuestion = questions[currentQuestionIndex];
+                    if (isYes) { if (currentQuestion.isCoreFactor) { score++; } yesAnswers.push(currentQuestion); }
+                    questionCard.classList.add('exiting');
+                    setTimeout(() => { currentQuestionIndex++; if (currentQuestionIndex < questions.length) { questionCard.classList.remove('exiting'); questionCard.classList.add('entering'); showQuestion(); } else { showResult(); } }, 500);
+                };
+                const restartQuiz = () => {
                     if (resetTimer) { clearTimeout(resetTimer); }
                     resultModal.classList.add('hidden'); resultModal.querySelector('div').classList.remove('scale-100');
                     startScreen.classList.remove('hidden'); questionCard.classList.remove('exiting', 'entering');
                     criteriaSection.classList.remove('show'); improvementSection.classList.remove('show');
+                };
+                const startQuiz = () => { startScreen.classList.add('hidden'); questionArea.classList.remove('hidden'); currentQuestionIndex = 0; score = 0; yesAnswers = []; showQuestion(); };
+
+                // Animate title
+                if (title && !title.hasAttribute('data-animated')) {
+                    const textContent = title.textContent; const words = textContent.split(' '); let charIndex = 0;
+                    title.innerHTML = '';
+                    words.forEach((word, wordIndex) => {
+                        const wordSpan = document.createElement('span'); wordSpan.className = 'word';
+                        for (let i = 0; i < word.length; i++) {
+                            const charSpan = document.createElement('span'); charSpan.className = 'char';
+                            charSpan.textContent = word[i]; charSpan.style.setProperty('--i', charIndex++);
+                            wordSpan.appendChild(charSpan);
+                        }
+                        title.appendChild(wordSpan);
+                        if (wordIndex < words.length - 1) { title.appendChild(document.createTextNode(' ')); }
+                    });
+                    title.setAttribute('data-animated', 'true');
                 }
+
+                // Attach event listeners
+                if(closePromoBtn) { closePromoBtn.addEventListener('click', () => { promoModal.classList.add('hidden'); promoModal.querySelector('div').classList.remove('scale-100'); }); }
                 startBtn.addEventListener('click', startQuiz);
                 answerButtons.forEach(button => button.addEventListener('click', handleAnswer));
                 restartBtn.addEventListener('click', restartQuiz);
@@ -591,7 +805,7 @@
                         question: "Chronic stress can negatively impact metabolic health primarily by raising which hormone?",
                         imageUrl: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?q=80&w=600&auto=format&fit=crop",
                         answers: [{ text: "Cortisol", correct: true }, { text: "Testosterone", correct: false }, { text: "Estrogen", correct: false }, { text: "Melatonin", correct: false }],
-                        explanation: "Cortisol, the primary stress hormone, raises blood sugar to prepare the body for a 'fight or flight' response. Chronic stress leads to chronically elevated cortisol, which can cause persistent high blood sugar, increase cravings for unhealthy food, and promote belly fat storage."
+                        explanation: "Cortisol, a stress hormone, raises blood sugar for 'fight or flight.' Chronic stress means high cortisol, causing high blood sugar, unhealthy food cravings, and belly fat storage."
                     },
                     {
                         question: "Poor sleep is linked to poor metabolic health because it can...",
